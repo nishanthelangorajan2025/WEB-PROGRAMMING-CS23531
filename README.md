@@ -127,7 +127,7 @@ Make sure you have the following installed:
    npm install
    npm run dev
    ```
-   > Vite will start the frontend at `http://localhost:5173`. Open this URL in your browser. Vite is pre-configured to forward all `/api/*` requests to the Python server.
+   > It will start the frontend at `http://localhost:8000`. Open this URL in your browser. Vite is pre-configured to forward all `/api/*` requests to the Python server.
 
 ---
 
