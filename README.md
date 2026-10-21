@@ -1,189 +1,169 @@
 # WEB-PROGRAMMING-CS23531
+Here is an updated, professional, and well-structured **`README.md`** tailored specifically for your GitHub repository:
 
-**MEDIXAI — Explainable Rule-Based Clinical Decision Support System**
+```markdown
+# MEDIXAI · Explainable Expert System
 
-A zero-dependency full-stack web application demonstrating glass-box symbolic AI, reactive DOM architecture, and hybrid SQLite and LocalStorage persistence.
+[![React](https://img.shields.io/badge/Frontend-React%2018%20%7C%20Vite-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![Python](https://img.shields.io/badge/Backend-Python%203%20(Standard%20Lib)-3776AB?logo=python&logoColor=white)](https://python.org/)
+[![Database](https://img.shields.io/badge/Database-SQLite3-003B57?logo=sqlite&logoColor=white)](https://sqlite.org/)
+[![Course](https://img.shields.io/badge/Coursework-CS23531%20Web%20Dev%20%7C%20CS23533%20FOAI-4B0082)](#)
 
-**Overview**
+> **Academic Project:** An interactive, explainable rule-based clinical expert system featuring forward rule evaluation, backward premise verification, contradiction detection, and dynamic SQLite persistence with a modern React 18 interface.
 
-**MEDIXAI** is an explainable clinical expert system built to make diagnostic rule evaluation completely transparent and inspectable. Unlike opaque machine-learning symptom checkers that output unverified probabilities, MEDIXAI models clinical knowledge explicitly as weighted symptom premises and required diagnostic conditions. Every evaluation exposes the exact matched weights, missing required premises, contradiction locks, and step-by-step logical derivation behind each candidate hypothesis.
+---
 
-From a software engineering perspective, MEDIXAI is architected as a self-contained, zero-framework full-stack web application. It pairs a custom Python HTTP and REST application server and a normalized five-table SQLite relational database with a reactive vanilla JavaScript (ES6+) single-page interface, semantic HTML5 progressive disclosure, and automatic client-side `localStorage` failover.
+## 📌 Overview
 
-**Key Capabilities & System Metrics**
+**MEDIXAI** demonstrates how symbolic artificial intelligence and expert systems operate transparently without opaque black-box models. 
 
-| System Dimension | Production Specification | Engineering Implementation |
-| --- | --- | --- |
-| **Clinical Knowledge Base** | 98 Disease Rules · 12 Specialties | Covers Respiratory, Cardiovascular, Digestive, Neurological, Viral, Bacterial, Skin, Endocrine, Urinary, Musculoskeletal, Hematological, and Emergency conditions. |
-| **Symptom Vocabulary** | 397 Canonical Observation Facts | Normalized `snake_case` identifiers with clinical definitions, rule analytics, and red-flag triage indicators. |
-| **Weighted Rule Graph** | 639 Premise Links · 236 Required | Bipartite disease-symptom mapping with integer weights (`1–10`) and mandatory premise constraints. |
-| **Clinical Safety Engine** | 7 Contradiction Pairs · 19 Red Flags | Pre-inference conflict blocking (e.g., `fever` vs. `no_fever`) and immediate emergency banners for critical symptoms. |
-| **Triage Stratification** | 4 Severity Tiers · 34 Urgent Rules | Classifies rules into Low (14), Moderate (43), Serious (26), and Emergency (15) severity with explicit escalation notices. |
-| **Hybrid Persistence** | SQLite 3 + Browser LocalStorage | Full relational persistence when connected to the Python API, with seamless offline fallback to a 38-rule client store. |
+Given clinical observations (symptom facts), MEDIXAI executes a forward-evaluation inference pass across a relational knowledge base of diseases, symptoms, and weights. It ranks potential candidate conditions, highlights missing required premises, alerts users to red-flag triage emergencies, and allows users to dynamically expand the knowledge base through an integrated CRUD interface.
 
-**How the Inference Engine Works**
+---
 
-MEDIXAI evaluates symptom inputs through a four-stage deterministic reasoning pipeline:
+## ✨ Features
 
-**1. Tri-State Fact Representation**
+- **Transparent Rule Evaluation & Scoring:**
+  - Evaluates rules via weighted symptom overlap:
+    $$\text{score} = \left(\frac{100 \times \sum w_{\text{matched}}}{\sum w_{\text{total}}}\right) \times (\text{if missing required premises}: 0.60 \text{ else } 1.00)$$
+  - Displays formal deduction derivations (`IF ... THEN ... [fired/not fired]`) for total explainability.
 
-The system distinguishes between three explicit observation states rather than treating unselected symptoms as negative evidence:
+- **Backward Premise Verification & What-If Interactivity:**
+  - Suggests unanswered required premises for top hypothesis candidates.
+  - Interactive `Yes` / `No` / `Unsure` answering directly recomputes candidate rankings in real time.
+  - Unmatched optional symptoms can be added dynamically from the details drawer.
 
-* **Present (`facts` Set)**: Symptoms actively reported by the user.
-* **Explicitly Absent (`absent` Set)**: Required premises confirmed as absent during backward verification.
-* **Unknown**: Unselected symptoms that have not yet been established or ruled out.
+- **Safety Triage & Contradiction Guardrails:**
+  - Detects mutually exclusive symptom inputs (e.g., `fever` vs. `no_fever`, `diarrhea` vs. `constipation`) and halts evaluation until resolved.
+  - Flags critical red-flag symptoms (e.g., `crushing_chest_pain`, `stridor_laryngeal_edema`, `altered_mental_state`) with emergency warning banners.
 
-**2. Pre-Inference Consistency & Safety Gate**
+- **Dynamic Knowledge Base Expansion (CRUD):**
+  - Add or update disease rules with custom weights, required subsets, severity levels, and clinical guidance.
+  - Register new symptom facts and configure whether they trigger safety triage flags.
+  - Add custom contradiction pairs.
+  - Automatically persists updates to the SQLite relational database.
 
-Before scoring any disease rule, the engine checks the active fact set against mutually exclusive contradiction pairs:
+- **Evaluation History & State Restoration:**
+  - Logs past evaluations with timestamps, fact sets, top candidate matches, and scores.
+  - One-click restore button reloads any historical evaluation back into the active workspace.
 
-* `fever` ↔ `no_fever`
-* `high_fever` ↔ `no_fever`
-* `diarrhea` ↔ `constipation`
-* `weight_loss` ↔ `weight_gain`
-* `unexplained_weight_loss` ↔ `weight_gain`
-* `bradycardia` ↔ `tachycardia`
-* `hypotension` ↔ `hypertension`
+- **Zero-Dependency Python Backend:**
+  - The backend uses Python’s built-in standard library (`http.server`, `sqlite3`, `json`) — no `pip install` required.
 
-If conflicting observations coexist, forward evaluation halts and prompts the user to resolve the contradiction. Concurrently, selecting any of the 19 red-flag symptoms (such as `crushing_chest_pain`, `facial_droop`, `stridor_laryngeal_edema`, or `sudden_shortness_of_breath`) triggers an urgent clinical triage alert.
+---
 
-**3. Forward Weighted Overlap Scoring**
+## 🛠 Tech Stack
 
-A single forward pass evaluates all 98 disease rules. For each disease $d$ with total symptom weight $W_{\text{total}}$ and matched symptom weight $W_{\text{matched}}$:
+| Layer | Technology | Details |
+|---|---|---|
+| **Frontend** | React 18, Vite | Declarative components, reactive state management, dark-mode CSS |
+| **Backend** | Python 3 (`http.server`) | REST API handling state, CRUD updates, and logs |
+| **Database** | SQLite 3 (`medixai.db`) | Relational tables (`diseases`, `symptoms`, `disease_symptoms`, `contradictions`, `evaluation_logs`) |
+| **Architecture** | Client-Server Architecture | Vite proxy (`/api` → `http://localhost:8000`) with automatic offline `localStorage` fallback |
+
+---
+
+## 📁 Repository Structure
 
 ```text
-BaseScore(d) = 100 * (W_matched / W_total)
-
-If all required premises hold:
-    FinalScore(d) = BaseScore(d)
-If one or more required premises are missing:
-    FinalScore(d) = 0.60 * BaseScore(d)
+.
+├── src/
+│   ├── App.jsx            # Main React application component (Workspace, KB, Logs, Method)
+│   ├── App.css            # Dark-theme responsive stylesheet
+│   ├── initialData.js     # Default clinical knowledge base, contradiction pairs & warnings
+│   └── main.jsx           # React DOM root entry point
+├── app.py                 # Python REST API server & auto-seeding SQLite backend
+├── index.html             # Vite entry HTML
+├── package.json           # Frontend dependencies and npm scripts
+├── vite.config.js         # Vite configuration with /api reverse proxy
+├── .gitignore             # Git ignore file for node_modules, build, and DB
+└── README.md              # Project documentation
 
 ```
 
-Candidates with at least one matched symptom are ranked in descending order of `FinalScore(d)`, with alphabetical tie-breaking.
+---
 
-**4. Interactive Backward Premise Chaining**
+## 🚀 Quick Start Guide
 
-Selecting any candidate rule reveals its **Backward Premise Check** panel. For every missing required premise, the user can answer **Yes**, **No**, or **Unsure** in real time:
+### Prerequisites
 
-* **Yes**: Moves the premise into the `facts` Set, removes the `0.60` penalty once all required premises are met, and re-ranks all candidates.
-* **No**: Moves the premise into the `absent` Set and marks the rule as logically blocked.
-* **Unsure**: Retains the premise as unknown and preserves the current partial score.
+* **Python 3.8+** installed (`python --version`)
+* **Node.js 18+** & **npm** installed (`node --version`)
 
-**Web Programming Concepts Covered**
+---
 
-MEDIXAI serves as a comprehensive implementation of modern full-stack web engineering principles built entirely with native browser and Python standard-library APIs:
-
-**1. HTTP Server & RESTful Application Routing**
-
-* **Unified Web & Application Server**: `MedixAIRequestHandler` serves static frontend assets over `GET /` while exposing a JSON REST API across `/api/*` endpoints on port `8000`.
-* **Request Stream & CORS Handling**: Reads raw request bodies via `Content-Length`, validates JSON payloads with structured `400 Bad Request` error responses, and supports cross-origin preflight requests via `do_OPTIONS` (`Access-Control-Allow-Origin: *`).
-* **Single-Trip State Synchronization**: Every mutating `POST` or `DELETE` request returns the complete `fetch_full_state()` snapshot, eliminating redundant follow-up `GET` requests.
-
-**2. Semantic HTML5 & Progressive Disclosure**
-
-* **Structural Landmarks**: Uses `<header>`, `<nav role="tablist">`, `<main>`, `<section role="tabpanel">`, `<article class="card">`, `<aside class="notice">`, and `<footer>` for semantic document hierarchy.
-* **Native Disclosure Widgets**: Uses `<details>` and `<summary>` tags to build collapsible clinical guidance panels, formal logic traces, evaluation log accordions, and the knowledge base CRUD drawer without external JavaScript plugins.
-* **WAI-ARIA Accessibility**: Implements `role="tab"`, `aria-selected`, `aria-controls`, `aria-expanded`, and `aria-live="polite"` regions so assistive technologies announce dynamic rule evaluations seamlessly.
-
-**3. Modern CSS3 Architecture, Box Model & Responsive Layouts**
-
-* **Custom Properties (Design Tokens)**: Centralizes dark-mode color tokens (`--bg`, `--card`, `--ink`, `--muted`, `--line`, `--accent`, `--tint`, `--green`, `--red`, `--orange`) in `:root`.
-* **Box Model & Relational Pseudo-Classes**: Applies universal `box-sizing: border-box`, `44px` minimum interactive hit targets, `3px solid` focus outlines via `:focus-visible`, and parent state highlighting via `.symptom-item:has(input:checked)`.
-* **CSS Grid & Flexbox**: Combines a two-column split workspace (`.grid`), a three-column knowledge base card layout (`.kb-grid`), and Flexbox toolbars that adapt to mobile viewports via `@media (max-width: 760px)`.
-
-**4. Client-Side JavaScript (ES6+), DOM Manipulation & Form Controls**
-
-* **Interactive Form Controls**: Implements real-time substring search (`<input type="search">`), category filtering (`<select>`), autocomplete suggestions (`<datalist>`), symptom checkboxes (`<input type="checkbox">`), and multi-input CRUD forms (`<form>`, `<textarea>`).
-* **Event Delegation & Roving Keyboard Focus**: Uses delegated event listeners (`e.target.closest(...)`) for dynamically rendered chips, premise buttons, and symptom drawers, alongside keyboard navigation (`ArrowRight`, `ArrowLeft`, `Home`, `End`) across tabs.
-* **Input Parsing & XSS Defense**: Parses comma-separated `symptom:weight` pairs, normalizes identifiers to `snake_case`, clamps weights to `[1, 10]`, and sanitizes all dynamic strings via `esc()` before `innerHTML` rendering.
-
-**5. Unidirectional State Dataflow & Client-Side View Routing**
-
-```text
-┌──────────────────────┐     ┌──────────────────────┐     ┌──────────────────────┐
-│   Lifecycle Mount    │     │  Central State Store │     │ Pure View Renderers  │
-│     loadState()      │────▶│  KB, facts, absent,  │────▶│   renderSymptoms()  │
-│  Fetch /api/state or │     │  contradictions,     │     │   renderResults()    │
-│  hydrate LocalStorage│     │  evaluationLogs      │     │   renderKB(), Logs() │
-└──────────────────────┘     └──────────▲───────────┘     └──────────┬───────────┘
-                                        │                            │
-                                        │   User Events & API Sync   │
-                                        └────────────────────────────┘
-
-```
-
-* **Declarative State-to-DOM Rendering**: State mutations in `facts`, `absent`, or `KB` invoke deterministic render functions (`renderFacts()`, `renderSymptoms()`, `renderResults()`, `renderKB()`, `renderLogs()`) that keep the UI synchronized.
-* **Client-Side Tab Routing**: `showTab(id)` switches workspace views instantaneously without full-page reloads.
-
-**6. Relational Database Design & Referential Integrity**
-
-| Table Name | Primary & Foreign Keys | Columns & Constraints |
-| --- | --- | --- |
-| `diseases` | `PRIMARY KEY (name)` | `category`, `severity`, `emergency` (0/1), `description`, `treatment`, `precaution` |
-| `symptoms` | `PRIMARY KEY (id)` | `note` (clinical definition), `warning_flag` (0/1 red-flag trigger) |
-| `disease_symptoms` | `PRIMARY KEY (disease_name, symptom_id)` · `FOREIGN KEY ... ON DELETE CASCADE` | `weight` (integer 1–10), `is_required` (0/1 mandatory premise flag) |
-| `contradictions` | `PRIMARY KEY (symptom_a, symptom_b)` | Pairs of mutually exclusive symptom identifiers |
-| `evaluation_logs` | `PRIMARY KEY (id AUTOINCREMENT)` | `timestamp`, `present_facts` (JSON), `absent_facts` (JSON), `top_disease`, `top_score`, `candidate_count` |
-
-**REST API Specification**
-
-| Method | Endpoint | Request Body (JSON) | Action & Response |
-| --- | --- | --- | --- |
-| `GET` | `/api/state` | *None* | Returns `200 OK` with `kb`, `symptoms_meta`, `warning_facts`, `contradictions`, and the latest 25 `logs`. |
-| `POST` | `/api/diseases` | `{ name, category, severity, emergency, description, symptoms, required, treatment, precaution }` | Validates required fields, clamps weights to `[1, 10]`, auto-registers new symptoms, and returns `201 Created` with updated state. |
-| `POST` | `/api/symptoms` | `{ id, note, warning }` | Normalizes `id` to `snake_case`, upserts into `symptoms`, and returns `201 Created`. |
-| `POST` | `/api/contradictions` | `{ symptom_a, symptom_b }` | Verifies distinct non-empty symptom IDs, inserts into `contradictions`, and returns `201 Created`. |
-| `POST` | `/api/logs` | `{ present_facts, absent_facts, top_disease, top_score, candidate_count }` | Timestamps and logs an evaluation run into `evaluation_logs`, returning `201 Created`. |
-| `DELETE` | `/api/logs` | *None* | Clears all records from `evaluation_logs` and returns `200 OK` with refreshed state. |
-
-**Repository Layout**
-
-```text
-medixai/
-├── app.py              (Full-stack Python HTTP server, REST API router, and SQLite initializer)
-├── index.html          (Complete single-page application: UI, styling, and inference engine)
-├── medixai.db          (Embedded SQLite 3 database: 98 diseases, 397 symptoms, 639 links)
-└── README.md           (Project documentation and system architecture)
-
-```
-
-**How to Run It**
-
-**Prerequisites**
-
-* **Python 3.8+** (uses only standard library modules: `http.server`, `sqlite3`, `json`, `urllib.parse`, `datetime`, and `os`)
-* **Web Browser**: Any modern browser (Chrome, Firefox, Edge, or Safari)
-
-**Option 1: Full-Stack Mode (Python Server + SQLite Persistence)**
-
-1. Clone the repository and navigate into the project folder:
+### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/nishanthelangorajan2025/WEB-PROGRAMMING-CS23531.git
-cd medixai
+git clone [https://github.com/](https://github.com/)<your-username>/<your-repo-name>.git
+cd <your-repo-name>
 
 ```
 
-2. Start the backend server:
+---
+
+### Step 2: Start the Python SQLite Backend
+
+In your first terminal:
 
 ```bash
-python3 app.py
+python app.py
 
 ```
 
-3. Open the application in your browser:
+* **Output:** `MEDIXAI Full-Stack Server running at http://localhost:8000`
+* *Note:* On the very first run, `app.py` automatically initializes and seeds `medixai.db` with the entire clinical knowledge base.
 
-```text
-http://localhost:8000
+---
+
+### Step 3: Start the React Development Server
+
+In a second terminal:
+
+```bash
+npm install
+npm run dev
 
 ```
 
-The header badge will display **SQLite DB Connected**, and all custom diseases, symptoms, contradiction pairs, and evaluation logs will persist directly to `medixai.db`.
+* **Output:** Vite dev server running at `http://localhost:5173`
+* Open **[http://localhost:5173](http://localhost:5173)** in your browser.
 
-**Option 2: Standalone Static Mode (Zero-Server / Browser LocalStorage)**
+> Vite is pre-configured to forward all `/api/*` calls directly to the Python backend on port `8000`.
 
-Open `index.html` directly in your browser or deploy it to any static host (such as GitHub Pages). When `/api/state` is unreachable, the application automatically switches to **Local Storage DB Mode** and persists all changes to `localStorage` (`medixai_state_v2`).
+---
+
+## 📦 Production Build (Optional)
+
+If you wish to bundle the React frontend into static assets and serve everything from a single Python server:
+
+1. Build the production bundle:
+```bash
+npm run build
+
+```
 
 
+2. Start the Python server:
+```bash
+python app.py
+
+```
+
+
+3. Open **`http://localhost:8000`** in your browser. The backend will automatically detect the `dist/` directory and serve the compiled React app directly.
+
+---
+
+## 📡 REST API Reference
+
+The Python backend exposes the following endpoints:
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| `GET` | `/api/state` | Returns the entire current state (all disease rules, symptoms metadata, contradictions, and logs). |
+| `POST` | `/api/diseases` | Inserts or updates a disease rule with its associated symptoms and required premises. |
+| `POST` | `/api/symptoms` | Registers a new symptom fact or updates an existing clinical definition/flag. |
+| `POST` | `/api/contradictions` | Registers a new mutually exclusive symptom pair. |
+| `POST` | `/api/logs` | Appends a completed rule evaluation session to the history log. |
+| `DELETE` | `/api/logs` | Clears all evaluation history entries. |
