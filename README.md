@@ -104,7 +104,7 @@ MEDIXAI serves as a comprehensive implementation of modern full-stack web engine
 ```text
 ┌──────────────────────┐     ┌──────────────────────┐     ┌──────────────────────┐
 │   Lifecycle Mount    │     │  Central State Store │     │ Pure View Renderers  │
-│     loadState()      │────▶│  KB, facts, absent,  │────▶│   renderSymptoms()   │
+│     loadState()      │────▶│  KB, facts, absent,  │────▶│   renderSymptoms()  │
 │  Fetch /api/state or │     │  contradictions,     │     │   renderResults()    │
 │  hydrate LocalStorage│     │  evaluationLogs      │     │   renderKB(), Logs() │
 └──────────────────────┘     └──────────▲───────────┘     └──────────┬───────────┘
