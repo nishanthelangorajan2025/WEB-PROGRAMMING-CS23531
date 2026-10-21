@@ -1,5 +1,5 @@
 # WEB-PROGRAMMING-CS23531
-WEB PROGRAMMING CS23531
+
 **MEDIXAI — Explainable Rule-Based Clinical Decision Support System**
 
 A zero-dependency full-stack web application demonstrating glass-box symbolic AI, reactive DOM architecture, and hybrid SQLite and LocalStorage persistence.
@@ -161,7 +161,7 @@ medixai/
 1. Clone the repository and navigate into the project folder:
 
 ```bash
-git clone https://github.com/your-username/medixai.git
+git clone https://github.com/nishanthelangorajan2025/WEB-PROGRAMMING-CS23531.git
 cd medixai
 
 ```
@@ -186,6 +186,4 @@ The header badge will display **SQLite DB Connected**, and all custom diseases, 
 
 Open `index.html` directly in your browser or deploy it to any static host (such as GitHub Pages). When `/api/state` is unreachable, the application automatically switches to **Local Storage DB Mode** and persists all changes to `localStorage` (`medixai_state_v2`).
 
-**Disclaimer**
 
-> **Educational & Research Use Only**: MEDIXAI is an explainable AI and web engineering demonstration. Rule-match percentages represent heuristic overlap scores against authored rules, not clinical probabilities or medical diagnoses. Do not use this software to make healthcare decisions or delay professional medical care. If you experience chest pain, shortness of breath, neurological deficits, or any medical emergency, contact emergency services immediately.
