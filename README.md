@@ -8,7 +8,6 @@
 [![Vite](https://img.shields.io/badge/Vite-5.x-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![SQLite](https://img.shields.io/badge/SQLite-3-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 <p align="center">
   <a href="#-about-the-project">About</a> •
@@ -17,14 +16,14 @@
   <a href="#-quick-start">Quick Start</a> •
   <a href="#-repository-structure">Structure</a> •
   <a href="#-api-reference">API Reference</a> •
-  <a href="#-disclaimer">Disclaimer</a>
+  
 </p>
 
 </div>
 
 ---
 
-## 📖 About the Project
+## About the Project
 
 **MEDIXAI** is an educational, full-stack expert system designed to demystify symbolic artificial intelligence. Unlike black-box neural networks, MEDIXAI exposes the exact reasoning pathways connecting reported clinical facts (symptoms) to diagnostic rules (disease hypotheses).
 
@@ -36,7 +35,7 @@ The system integrates:
 
 ---
 
-## 🌟 Key Features
+## Key Features
 
 ### 1. Transparent Reasoning & Heuristic Scoring
 - Calculates heuristic match confidence using weighted fact overlap:
@@ -62,7 +61,7 @@ The system integrates:
 
 ---
 
-## 🏗 System Architecture
+## System Architecture
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
@@ -111,8 +110,8 @@ Make sure you have the following installed:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/<your-username>/<your-repo-name>.git
-   cd <your-repo-name>
+   git clone https://github.com/nishanthelangorajan2025/WEB-PROGRAMMING-CS23531.git
+   cd WEB-PROGRAMMING-CS23531
    ```
 
 2. **Start the Python + SQLite backend:**
@@ -160,7 +159,7 @@ Open **`http://localhost:8000`** directly. The Python server will serve the zero
 
 ---
 
-## 🔌 API Reference
+## API Reference
 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
@@ -173,14 +172,3 @@ Open **`http://localhost:8000`** directly. The Python server will serve the zero
 
 ---
 
-## 🛡️ Disclaimer
-
-> [!WARNING]
-> **FOR EDUCATIONAL AND SIMULATION PURPOSES ONLY.**
-> This project is designed strictly as an academic exploration of knowledge-based systems and forward/backward rule evaluation algorithms. It is **not** a diagnostic device, does **not** provide verified medical advice, and should never be used to make clinical or healthcare decisions. In the event of a medical emergency, immediately seek professional clinical help or contact local emergency services.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
